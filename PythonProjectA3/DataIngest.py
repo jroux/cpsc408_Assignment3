@@ -1,9 +1,7 @@
-#do we need constraints on phone number
-#check weird data inputs
-#how to not repeat rows when reading in
-#how to format options in rows for searching students
-#does capitalization matter/should take into account when searching by ex. major
 #Should we use main?
+
+
+#how to format options in rows for searching students
 
 
 #Jessica Roux
@@ -18,6 +16,9 @@ import sqlite3
 import pandas as pd
 from pandas import DataFrame
 
+#Connect to student database
+conn = sqlite3.connect('./StudentDB.db')
+mycursor = conn.cursor()
 
 #Function that provides user a menu to select which option they would like to execute
 def menu():
@@ -63,14 +64,18 @@ def menu():
 
 #Function that imports data from students.csv, reads in data, inserts data into Students table
 def importData():
-    with open("./students.csv") as inputfile:
-        records = 0
-        for row in inputfile:
-            if records != 0:
-                mycursor.execute("INSERT INTO Students(FirstName, LastName, Address, City, State, ZipCode, MobilePhoneNUmber, Major, GPA) VALUES (?,?,?,?,?,?,?,?,?)",
-                row.split(","))
-                conn.commit()
-            records += 1
+    #making sure data does repeat everytime ran
+    mycursor.execute("SELECT * FROM Students")
+    data1 = mycursor.fetchall()
+    if (data1 == []):
+        with open("./students.csv") as inputfile:
+            records = 0
+            for row in inputfile:
+                if records != 0:
+                    mycursor.execute("INSERT INTO Students(FirstName, LastName, Address, City, State, ZipCode, MobilePhoneNUmber, Major, GPA) VALUES (?,?,?,?,?,?,?,?,?)",
+                    row.split(","))
+                    conn.commit()
+                records += 1
 
 
 #Function that prints and displays the full Students table with all students and attributes
@@ -295,19 +300,3 @@ def searchStudent():
             print("Please enter a valid input.")
             continue
     conn.commit()
-
-
-#RUN MAIN
-
-
-#Connect to student database
-conn = sqlite3.connect('./StudentDB.db')
-mycursor = conn.cursor()
-
-
-#Execute and run program/functions
-importData()
-menu()
-
-
-conn.close()
