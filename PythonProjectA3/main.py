@@ -1,3 +1,9 @@
+#Jessica Roux
+#Student ID: 2317255
+#Chapman Email: jroux@chapman.edu
+#Course: 408-01
+#Assignment 3
+
 import DataIngest as di
 
 # Execute and run program/functions

@@ -1,9 +1,3 @@
-#Should we use main?
-
-
-#how to format options in rows for searching students
-
-
 #Jessica Roux
 #Student ID: 2317255
 #Chapman Email: jroux@chapman.edu
